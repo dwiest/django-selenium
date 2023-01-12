@@ -6,7 +6,7 @@ from django.views.generic.base import TemplateResponseMixin
 from .forms import SeleniumForm
 
 class SeleniumView(FormView,TemplateResponseMixin):
-  template_name = "selenium.html"
+  template_name = "selenium/index.html"
   success_url = '.'
   form_class = SeleniumForm
 
