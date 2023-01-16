@@ -1,7 +1,7 @@
 <Html>
 
 <Head>
-  <Title>Selenium</Title>
+  <Title>{{page_name}}</Title>
   <Style>
 .container {
   display: flex;
@@ -18,9 +18,13 @@
 
 <Body>
 
-<Div align="center"><H1>Selenium</H1>
+{% block header %}
+{% with title=page_name %}
 {% include 'header.html' %}
+{% endwith %}
+{% endblock %}
 
+<Div align="center">
 {% if form.non_field_errors %}
 <P>
 {% for error in form.non_field_errors %}
