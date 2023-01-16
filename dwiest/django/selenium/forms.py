@@ -5,16 +5,21 @@ from django.conf import settings
 
 class SeleniumForm(forms.Form):
   url = forms.URLField(label='url',initial='')
-  width = forms.IntegerField(label='width',initial='1024',min_value=20, max_value=2048)
-  height = forms.IntegerField(label='height',initial='1024',min_value=20, max_value=3072)
+  width = forms.IntegerField(label='width', initial='1024', min_value=20, max_value=2048)
+  height = forms.IntegerField(label='height', initial='1024', min_value=20, max_value=3072)
 
   def __init__(self, user, *args, **kwargs):
     self.user = user
     options = webdriver.ChromeOptions()
+
     options.add_argument("--headless")
-    options.add_argument("--proxy-server=http://squid:3128")
+
+    if hasattr(settings, 'SELENIUM_PROXY'):
+      options.add_argument("--proxy-server=" + settings.SELENIUM_PROXY)
+
     self.options = options
     self.browser = webdriver.Chrome('/usr/bin/chromedriver', chrome_options=options)
+
     super(forms.Form, self).__init__(*args, **kwargs)
 
   def screenshot(self, *args, **kwargs):
